@@ -2,7 +2,7 @@ local Library = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent
 
 local Window = Fluent:CreateWindow({
     Title = "Alter Hub",
-    SubTitle = "| V-2.9",
+        SubTitle = "| V-OUTDATED",
     TabWidth = 160,
     Size = UDim2.fromOffset(543, 300),
     Acrylic = false,
