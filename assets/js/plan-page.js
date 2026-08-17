@@ -191,25 +191,11 @@ const PAYPAL_MONTHLY_PLAN_IDS = Object.freeze({
   "premium-plus": "P-72H85729L5583625MNKBVQKY"
 });
 
-// Official PayPal Hosted Button IDs supplied for the lifetime products.
-const PAYPAL_LIFETIME_HOSTED_BUTTON_IDS = Object.freeze({
-  keyless: "Z2HWT9UJ6H9SC",
-  premium: "HGZSXXKFJEK4N",
-  "premium-plus": "4FKKNCSEUJCX6"
-});
-
-// Monthly subscriptions and lifetime Hosted Buttons use their own PayPal SDK
-// configurations. The Hosted Buttons SDK is loaded into a separate namespace
-// so both integrations can coexist safely on the same page.
 const PAYPAL_CLIENT_ID = "BAAwVHsGOQSMvQW5S6JMpJEMMbOTSeZuXZpkEF4ygqGKi0-4F5o6rj8MAeP5dENFSGaxDhSJcHSRyzzgVI";
-const PAYPAL_HOSTED_CLIENT_ID = "BAA_xc_bFzIU_CVMLm-rNFQ84VC1RJQ1DUoSxTb-uGuL0mvlGsz8gGP1G6H9npeJEdSm4GgQNKdZTnd8J4";
 const PAYPAL_SDK_ID = "alter-hub-paypal-sdk";
-const PAYPAL_HOSTED_SDK_ID = "alter-hub-paypal-hosted-sdk";
-const PAYPAL_HOSTED_NAMESPACE = "paypalHosted";
 const PAYPAL_SDK_TIMEOUT_MS = 20000;
 
 let paypalSdkPromise = null;
-let paypalHostedSdkPromise = null;
 
 function paypalSdkReady() {
   return Boolean(window.paypal && typeof window.paypal.Buttons === "function");
@@ -291,105 +277,6 @@ function loadPayPalSdk({ forceReload = false } = {}) {
   return paypalSdkPromise;
 }
 
-
-function paypalHostedSdkReady() {
-  const hostedNamespace = window[PAYPAL_HOSTED_NAMESPACE];
-  return Boolean(
-    hostedNamespace && typeof hostedNamespace.HostedButtons === "function"
-  );
-}
-
-function buildPayPalHostedSdkUrl() {
-  const params = new URLSearchParams({
-    "client-id": PAYPAL_HOSTED_CLIENT_ID,
-    components: "hosted-buttons",
-    "disable-funding": "venmo",
-    currency: "USD"
-  });
-
-  return `https://www.paypal.com/sdk/js?${params.toString()}`;
-}
-
-function loadPayPalHostedSdk({ forceReload = false } = {}) {
-  if (paypalHostedSdkReady()) {
-    return Promise.resolve(window[PAYPAL_HOSTED_NAMESPACE]);
-  }
-
-  if (forceReload) {
-    document.getElementById(PAYPAL_HOSTED_SDK_ID)?.remove();
-    try {
-      delete window[PAYPAL_HOSTED_NAMESPACE];
-    } catch (_) {
-      window[PAYPAL_HOSTED_NAMESPACE] = undefined;
-    }
-    paypalHostedSdkPromise = null;
-  }
-
-  if (paypalHostedSdkPromise) return paypalHostedSdkPromise;
-
-  paypalHostedSdkPromise = new Promise((resolve, reject) => {
-    let script = document.getElementById(PAYPAL_HOSTED_SDK_ID);
-    let settled = false;
-
-    const finish = (callback, value) => {
-      if (settled) return;
-      settled = true;
-      window.clearTimeout(timeoutId);
-      callback(value);
-    };
-
-    const handleLoad = () => {
-      if (paypalHostedSdkReady()) {
-        finish(resolve, window[PAYPAL_HOSTED_NAMESPACE]);
-      } else {
-        finish(
-          reject,
-          new Error("PayPal Hosted Buttons SDK loaded but the hosted-button API is unavailable.")
-        );
-      }
-    };
-
-    const handleError = () => {
-      finish(
-        reject,
-        new Error("PayPal Hosted Buttons SDK request was blocked or failed.")
-      );
-    };
-
-    const timeoutId = window.setTimeout(() => {
-      finish(
-        reject,
-        new Error("PayPal Hosted Buttons SDK timed out while loading.")
-      );
-    }, PAYPAL_SDK_TIMEOUT_MS);
-
-    const isNewScript = !script;
-
-    if (isNewScript) {
-      script = document.createElement("script");
-      script.id = PAYPAL_HOSTED_SDK_ID;
-      script.src = buildPayPalHostedSdkUrl();
-      script.async = true;
-      script.dataset.namespace = PAYPAL_HOSTED_NAMESPACE;
-      script.dataset.sdkIntegrationSource = "button-factory";
-    }
-
-    script.addEventListener("load", handleLoad, { once: true });
-    script.addEventListener("error", handleError, { once: true });
-
-    if (isNewScript) {
-      document.head.appendChild(script);
-    }
-
-    if (paypalHostedSdkReady()) handleLoad();
-  }).catch((error) => {
-    paypalHostedSdkPromise = null;
-    throw error;
-  });
-
-  return paypalHostedSdkPromise;
-}
-
 const tierSlug = document.body.dataset.tier;
 const tier = PLAN_CATALOG[tierSlug] || PLAN_CATALOG.keyless;
 const durationButtons = Array.from(document.querySelectorAll("[data-duration]"));
@@ -406,9 +293,6 @@ let selectedDuration = durationFromHash();
 let paypalButtonRendered = false;
 let paypalRenderStarted = false;
 let paypalButtonActions = null;
-let paypalHostedButtonRendered = false;
-let paypalHostedRenderStarted = false;
-let checkoutRenderMode = null;
 
 function durationFromHash() {
   const hash = window.location.hash.slice(1).trim().toLowerCase();
@@ -468,32 +352,19 @@ function renderList(selector, items, numbered = false) {
   });
 }
 
-function resetPayPalCheckout(mode = selectedDuration) {
-  if (!paypalSubscriptionButton) return;
+function lifetimePurchaseRequestUrl() {
+  const plan = currentPlan();
+  const subject = `Alter Hub ${plan.summaryTitle} purchase`;
+  const body = [
+    "Hello Alter Hub Support,",
+    "",
+    `I would like to purchase ${plan.summaryTitle} for ${plan.price}.`,
+    `Access duration: ${plan.access}.`,
+    "",
+    "Please send me the available payment instructions."
+  ].join("\n");
 
-  paypalSubscriptionButton.replaceChildren();
-  paypalButtonRendered = false;
-  paypalRenderStarted = false;
-  paypalButtonActions = null;
-  paypalHostedButtonRendered = false;
-  paypalHostedRenderStarted = false;
-  checkoutRenderMode = mode;
-}
-
-function setPayPalHeading(mode) {
-  const label = paypalSubscriptionWrap?.querySelector(
-    ".paypal-subscription-heading span"
-  );
-  const secureText = paypalSubscriptionWrap?.querySelector(
-    ".paypal-subscription-heading strong"
-  );
-
-  if (label) {
-    label.textContent =
-      mode === "monthly" ? "MONTHLY SUBSCRIPTION" : "LIFETIME PURCHASE";
-  }
-
-  if (secureText) secureText.textContent = "Secure checkout by PayPal";
+  return `mailto:support@alterhub.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 function showPayPalStatus(message, isError = false, allowRetry = false) {
@@ -516,16 +387,14 @@ function showPayPalStatus(message, isError = false, allowRetry = false) {
     retryButton.addEventListener("click", async () => {
       retryButton.disabled = true;
       text.textContent = "Reloading PayPal checkout…";
-      resetPayPalCheckout(selectedDuration);
+      paypalButtonRendered = false;
+      paypalRenderStarted = false;
+      paypalButtonActions = null;
 
       try {
-        if (selectedDuration === "monthly") {
-          await loadPayPalSdk({ forceReload: true });
-          await renderPayPalSubscriptionButton();
-        } else {
-          await loadPayPalHostedSdk({ forceReload: true });
-          await renderPayPalHostedButton();
-        }
+        await loadPayPalSdk({ forceReload: true });
+        paypalSubscriptionButton.replaceChildren();
+        await renderPayPalSubscriptionButton();
       } catch (error) {
         console.error("PayPal retry failed:", error);
         showPayPalStatus(
@@ -543,7 +412,6 @@ function showPayPalStatus(message, isError = false, allowRetry = false) {
 
 async function renderPayPalSubscriptionButton() {
   if (
-    selectedDuration !== "monthly" ||
     !paypalSubscriptionButton ||
     paypalButtonRendered ||
     paypalRenderStarted
@@ -564,10 +432,6 @@ async function renderPayPalSubscriptionButton() {
 
   try {
     await loadPayPalSdk();
-
-    // The user may have switched to Lifetime while the SDK was loading.
-    if (selectedDuration !== "monthly") return;
-
     paypalSubscriptionButton.replaceChildren();
 
     const buttons = window.paypal.Buttons({
@@ -630,7 +494,6 @@ async function renderPayPalSubscriptionButton() {
         console.error("PayPal subscription error:", error);
         showPayPalStatus(
           "PayPal could not start the subscription. Please refresh and try again.",
-          true,
           true
         );
       }
@@ -658,65 +521,11 @@ async function renderPayPalSubscriptionButton() {
   }
 }
 
-async function renderPayPalHostedButton() {
-  if (
-    selectedDuration !== "lifetime" ||
-    !paypalSubscriptionButton ||
-    !termsCheckbox?.checked ||
-    paypalHostedButtonRendered ||
-    paypalHostedRenderStarted
-  ) {
-    return;
-  }
-
-  const hostedButtonId = PAYPAL_LIFETIME_HOSTED_BUTTON_IDS[tierSlug];
-
-  if (!hostedButtonId) {
-    showPayPalStatus("This lifetime PayPal button has not been configured.", true);
-    return;
-  }
-
-  paypalHostedRenderStarted = true;
-  paypalSubscriptionButton.replaceChildren();
-  showPayPalStatus("Loading secure PayPal checkout…");
-
-  try {
-    const paypalHosted = await loadPayPalHostedSdk();
-
-    // The user may have changed plan/terms while the SDK was loading.
-    if (selectedDuration !== "lifetime" || !termsCheckbox?.checked) return;
-
-    paypalSubscriptionButton.replaceChildren();
-
-    const hostedButtons = paypalHosted.HostedButtons({
-      hostedButtonId
-    });
-
-    await hostedButtons.render("#paypal-subscription-button");
-    paypalHostedButtonRendered = true;
-  } catch (error) {
-    console.error("Failed to render PayPal lifetime Hosted Button:", error);
-    showPayPalStatus(
-      "PayPal lifetime checkout could not load. It may be blocked by the browser, an ad/content blocker, an in-app browser, or the current network.",
-      true,
-      true
-    );
-  } finally {
-    paypalHostedRenderStarted = false;
-  }
-}
-
 function updatePurchaseAvailability() {
   if (!termsCheckbox || !purchaseButton || !checkoutHint) return;
 
   const accepted = termsCheckbox.checked;
   const isMonthly = selectedDuration === "monthly";
-
-  if (checkoutRenderMode !== selectedDuration) {
-    resetPayPalCheckout(selectedDuration);
-  }
-
-  setPayPalHeading(selectedDuration);
 
   if (termsCopy) {
     termsCopy.textContent = isMonthly
@@ -724,20 +533,23 @@ function updatePurchaseAvailability() {
       : " and understand that lifetime access is a one-time purchase.";
   }
 
-  // All plans now use PayPal directly, so the old mailto purchase button is
-  // kept hidden for both monthly and lifetime checkout.
-  purchaseButton.removeAttribute("href");
   purchaseButton.removeAttribute("target");
   purchaseButton.removeAttribute("rel");
-  purchaseButton.setAttribute("aria-disabled", "true");
-  purchaseButton.tabIndex = -1;
-  purchaseButton.hidden = true;
-
-  if (paypalSubscriptionWrap) {
-    paypalSubscriptionWrap.hidden = false;
-  }
 
   if (isMonthly) {
+    purchaseButton.removeAttribute("href");
+    purchaseButton.setAttribute("aria-disabled", "true");
+    purchaseButton.tabIndex = -1;
+    purchaseButton.hidden = true;
+
+    if (purchaseButtonLabel) {
+      purchaseButtonLabel.textContent = "Accept Terms to Subscribe";
+    }
+
+    if (paypalSubscriptionWrap) {
+      paypalSubscriptionWrap.hidden = false;
+    }
+
     if (paypalButtonActions) {
       if (accepted) {
         paypalButtonActions.enable();
@@ -752,30 +564,32 @@ function updatePurchaseAvailability() {
       : "Accept the recurring billing terms to activate the PayPal Subscribe button.";
 
     void renderPayPalSubscriptionButton();
+
     return;
+  }
+
+  if (paypalSubscriptionWrap) {
+    paypalSubscriptionWrap.hidden = true;
+  }
+
+  purchaseButton.hidden = false;
+  purchaseButton.setAttribute("aria-disabled", String(!accepted));
+  purchaseButton.tabIndex = accepted ? 0 : -1;
+
+  if (purchaseButtonLabel) {
+    purchaseButtonLabel.textContent = "Continue with Lifetime Purchase";
   }
 
   checkoutHint.classList.toggle("is-ready", accepted);
+  checkoutHint.textContent = accepted
+    ? "Ready. Continue to receive the official lifetime payment instructions."
+    : "Accept the terms to continue with this lifetime purchase.";
 
-  if (!accepted) {
-    // Hosted Buttons do not expose the same enable/disable actions as the
-    // subscription button, so remove the live checkout when terms are not
-    // accepted and render it again only after acceptance.
-    if (paypalHostedButtonRendered || paypalHostedRenderStarted) {
-      resetPayPalCheckout("lifetime");
-    }
-
-    showPayPalStatus(
-      "Accept the terms above to activate the secure PayPal lifetime checkout."
-    );
-    checkoutHint.textContent =
-      "Accept the terms to activate the PayPal lifetime purchase button.";
-    return;
+  if (accepted) {
+    purchaseButton.href = lifetimePurchaseRequestUrl();
+  } else {
+    purchaseButton.removeAttribute("href");
   }
-
-  checkoutHint.textContent =
-    "Click the PayPal button above to complete your one-time lifetime purchase.";
-  void renderPayPalHostedButton();
 }
 
 function restartAnimation() {

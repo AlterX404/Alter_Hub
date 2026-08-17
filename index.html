@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Alter Hub Favicon -->
+  <link rel="icon" type="image/png" href="/assets/images/AH.png">
+  <link rel="shortcut icon" type="image/png" href="/assets/images/AH.png">
+  
+  <!-- Social / Discord / WhatsApp Preview -->
+  <meta property="og:title" content="Alter Hub | Premium Roblox Utility Platform">
+  <meta property="og:description" content="Alter Hub is a Roblox utility platform with a modern interface, powerful features, and game-specific utilities.">
+  <meta property="og:image" content="https://alterhub.online/assets/images/AH_Banner.gif">
+  <meta property="og:url" content="https://alterhub.online">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter / X Preview -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Alter Hub | Premium Roblox Utility Platform">
+  <meta name="twitter:description" content="Alter Hub is a Roblox utility platform with powerful utilities and a modern interface.">
+  <meta name="twitter:image" content="https://alterhub.online/assets/images/AH_Banner.gif">
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#050505"
+  />
+
+  <meta
+    name="description"
+    content="Alter Hub is a polished Roblox utility platform featuring a fast interface, simple access system, regular updates, and support for popular Roblox experiences."
+  />
+
+  <title>Alter Hub | Premium Roblox Utility Platform</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="assets/css/styles.css"
+  />
+
+
+  <style>
+    /* Cursor-following hero tilt */
+    .hero {
+      perspective: 1100px;
+      overflow: hidden;
+    }
+
+    .hero-tilt {
+      width: 100%;
+      transform:
+        rotateX(var(--hero-rotate-x, 0deg))
+        rotateY(var(--hero-rotate-y, 0deg));
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
+
+    .hero-tilt .pill {
+      display: inline-block;
+      transform: translateZ(10px);
+    }
+
+    .hero-tilt h1 {
+      transform: translateZ(24px);
+    }
+
+    .hero-tilt p {
+      transform: translateZ(14px);
+    }
+
+    .hero:not(.is-tracking) .hero-tilt {
+      transition: transform 0.5s ease;
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .hero-tilt,
+      .hero-tilt .pill,
+      .hero-tilt h1,
+      .hero-tilt p {
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-tilt,
+      .hero-tilt .pill,
+      .hero-tilt h1,
+      .hero-tilt p {
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <header class="site-header">
+
+    <div class="container nav-wrap">
+
+      <a
+        class="brand"
+        href="#home"
+        aria-label="Alter Hub home"
+      >
+        Alter<span>Hub</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        ☰
+      </button>
+
+      <nav
+        id="primary-navigation"
+        class="nav-links"
+        aria-label="Primary navigation"
+      >
+
+        <a href="#home">
+          Home
+        </a>
+        
+        <a href="#pricing">
+          Pricing
+        </a>
+
+        <a href="#features">
+          Features
+        </a>
+
+        <a href="#games">
+          Games
+        </a>
+
+        <a href="#faq">
+          FAQ
+        </a>
+
+        <a
+          class="discord-btn"
+          href="https://discord.gg/nzyb2QxYjn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Discord
+        </a>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    <!-- HERO SECTION -->
+
+    <section
+      id="home"
+      class="hero section-dark"
+    >
+
+      <div
+        class="hero-glow"
+        aria-hidden="true"
+      ></div>
+
+      <div class="container hero-content">
+
+        <div class="hero-tilt">
+
+          <span class="eyebrow pill">
+            PREMIUM ROBLOX UTILITY PLATFORM
+          </span>
+
+          <h1>
+            ALTER
+            <br />
+            <span>HUB</span>
+          </h1>
+
+          <p>
+            A polished Roblox utility platform built around a fast interface,
+            simple access, smooth navigation, regular improvements, and support
+            for a growing collection of popular experiences.
+          </p>
+
+        </div>
+
+        <a class="btn btn-primary" href="get-script">
+          Get Loadstring
+          <span aria-hidden="true">→</span>
+        </a>
+
+          <a
+            class="btn btn-secondary"
+            href="#pricing"
+          >
+            Get Premium
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  <!-- ACCESS PLANS -->
+
+    <section
+      id="pricing"
+      class="section section-dark pricing-section"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow pill">
+            CHOOSE YOUR ACCESS
+          </span>
+
+          <h2>
+            Three Ways to
+            <span>Unlock More</span>
+          </h2>
+
+          <p>
+            Choose the access tier that fits you, then select either an
+            automatically renewing monthly subscription or lifetime access.
+          </p>
+
+        </div>
+
+
+        <div class="pricing-grid pricing-grid-three">
+
+          <article class="price-card access-card">
+
+            <div class="access-card-top">
+              <span class="plan-label">KEYLESS</span>
+              <span class="tier-badge">ESSENTIAL</span>
+            </div>
+
+            <h3>Keyless</h3>
+
+            <p class="plan-summary">
+              Skip the free key-system checkpoints while your access is
+              active. Premium-only features are not included.
+            </p>
+
+            <div class="starting-price">
+              <span class="starting-label">Starting from</span>
+              <div class="starting-price-row">
+                <del>$9.99</del>
+                <strong>$5.99</strong>
+              </div>
+              <span class="period">per month</span>
+            </div>
+
+            <ul>
+              <li>No key-system checkpoints</li>
+              <li>Access across supported games</li>
+              <li>Regular platform updates</li>
+              <li>Monthly subscription or lifetime</li>
+            </ul>
+
+            <a
+              class="btn btn-muted plan-button"
+              href="keyless/#monthly"
+            >
+              Explore Keyless
+              <span aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <article class="price-card access-card featured">
+
+            <span class="best-value">★ MOST POPULAR</span>
+
+            <div class="access-card-top">
+              <span class="plan-label">PREMIUM</span>
+              <span class="tier-badge">RECOMMENDED</span>
+            </div>
+
+            <h3>Premium</h3>
+
+            <p class="plan-summary">
+              Get everything in Keyless plus Alter Hub's premium features,
+              priority support, and premium updates.
+            </p>
+
+            <div class="starting-price">
+              <span class="starting-label">Starting from</span>
+              <div class="starting-price-row">
+                <del>$14.99</del>
+                <strong>$7.99</strong>
+              </div>
+              <span class="period">per month</span>
+            </div>
+
+            <ul>
+              <li>Everything included in Keyless</li>
+              <li>Premium platform features</li>
+              <li>Priority community support</li>
+              <li>Monthly subscription or lifetime</li>
+            </ul>
+
+            <a
+              class="btn btn-primary plan-button"
+              href="premium/#monthly"
+            >
+              Explore Premium
+              <span aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+
+          <article class="price-card access-card">
+
+            <div class="access-card-top">
+              <span class="plan-label">PREMIUM PLUS</span>
+              <span class="tier-badge">TOP TIER</span>
+            </div>
+
+            <h3>Premium Plus</h3>
+
+            <p class="plan-summary">
+              Unlock the complete Alter Hub experience with exclusive Plus
+              benefits, earliest access, and top-priority support.
+            </p>
+
+            <div class="starting-price">
+              <span class="starting-label">Starting from</span>
+              <div class="starting-price-row">
+                <del>$19.99</del>
+                <strong>$9.99</strong>
+              </div>
+              <span class="period">per month</span>
+            </div>
+
+            <ul>
+              <li>Everything included in Premium</li>
+              <li>Exclusive Premium Plus benefits</li>
+              <li>Highest-priority support</li>
+              <li>Monthly subscription or lifetime</li>
+            </ul>
+
+            <a
+              class="btn btn-muted plan-button"
+              href="premium-plus/#monthly"
+            >
+              Explore Premium Plus
+              <span aria-hidden="true">→</span>
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  <!-- FEATURES SECTION -->
+
+    <section
+      id="features"
+      class="section section-dark"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="container hero-content">
+
+            <div class="hero-tilt">
+              <span class="eyebrow pill">
+                WHAT WE OFFER
+              </span>
+
+              <h2>
+                Built for a Better
+                <span>Experience</span>
+              </h2>
+
+              <p>
+                A refined collection of platform features designed to make access,
+                navigation, customization, and community support feel simple.
+              </p>
+            </div>
+          </div>  
+        </div>
+
+
+        <div class="feature-grid">
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              ⚡
+            </div>
+
+            <h3>
+              Fast Performance
+            </h3>
+
+            <p>
+              Lightweight components, responsive navigation, and optimized
+              loading help keep the platform quick and smooth.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              🔑
+            </div>
+
+            <h3>
+              Improved Key System
+            </h3>
+
+            <p>
+              A streamlined verification process with clear instructions,
+              faster access, and fewer unnecessary steps.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              🎨
+            </div>
+
+            <h3>
+              Modern User Interface
+            </h3>
+
+            <p>
+              A clean and responsive layout designed to remain easy to use on
+              desktop, tablet, and mobile devices.
+            </p>
+
+          </article>
+
+
+
+
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              🔄
+            </div>
+
+            <h3>
+              Regular Improvements
+            </h3>
+
+            <p>
+              Frequent maintenance, interface refinements, compatibility work,
+              and quality-of-life updates.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              🎮
+            </div>
+
+            <h3>
+              Multi-Game Support
+            </h3>
+
+            <p>
+              Access information and platform support for a growing collection
+              of popular Roblox experiences.
+            </p>
+
+          </article>
+
+
+
+
+
+          <article class="card">
+
+            <div
+              class="icon"
+              aria-hidden="true"
+            >
+              💬
+            </div>
+
+            <h3>
+              Community Support
+            </h3>
+
+            <p>
+              Get assistance, report problems, suggest improvements, and speak
+              with other members through the official community.
+            </p>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  <!-- SUPPORTED GAMES SECTION -->
+
+    <section
+      id="games"
+      class="section section-alt"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <div class="container hero-content">
+
+            <div class="hero-tilt">
+
+              <span class="eyebrow pill">
+                GAME SUPPORT
+              </span>
+
+              <h2>
+                Supported
+                <span>Games</span>
+              </h2>
+
+              <p>
+                Platform support is available for a growing selection of popular
+                Roblox experiences.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="games-grid">
+
+          <article class="game-card">
+
+            <h3>
+              Demonfall 🌑
+            </h3>
+
+            <span>
+              ACTIVE SUPPORT
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Devas of Creation ⚔️
+            </h3>
+
+            <span>
+              REGULAR UPDATES
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Blox Fruits 🍉
+            </h3>
+
+            <span>
+              COMMUNITY FAVORITE
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Jujutsu Infinite 🧿
+            </h3>
+
+            <span>
+              OPTIMIZED EXPERIENCE
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Haikyuu Legends 🏐
+            </h3>
+
+            <span>
+              FULLY COMPATIBLE
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Build a Boat for Treasure ⛵💰
+            </h3>
+
+            <span>
+              ACTIVELY MAINTAINED
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Criminality 🕶️
+            </h3>
+
+            <span>
+              LATEST VERSION
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Fisch 🐟
+            </h3>
+
+            <span>
+              PERFORMANCE OPTIMIZED
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Project Delta 🎯
+            </h3>
+
+            <span>
+              STABLE RELEASE
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Anime Kingdom 👑
+            </h3>
+
+            <span>
+              FREQUENT IMPROVEMENTS
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Phantom Forces 🎖️
+            </h3>
+
+            <span>
+              COMMUNITY SUPPORTED
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Dead Rails 🚂
+            </h3>
+
+            <span>
+              REFINED EXPERIENCE
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Spiked 🏐
+            </h3>
+
+            <span>
+              QUALITY UPDATES
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Blue Lock Rivals ⚽
+            </h3>
+
+            <span>
+              ACTIVELY SUPPORTED
+            </span>
+
+          </article>
+
+
+          <article class="game-card">
+
+            <h3>
+              Beaks 🐤
+            </h3>
+
+            <span>
+              GROWING SUPPORT
+            </span>
+
+          </article>
+
+        </div>
+
+
+        <p class="games-note">
+
+          More experiences are added regularly.
+
+          Suggest one through our
+
+          <a href="#community">
+            Discord community
+          </a>.
+
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+
+  <!-- FAQ SECTION -->
+
+    <section
+      id="faq"
+      class="section section-alt"
+    >
+
+      <div class="container faq-wrap">
+
+        <div class="section-heading">
+
+          <span class="eyebrow pill">
+            GOT QUESTIONS?
+          </span>
+
+          <h2>
+            Frequently Asked
+            <span>Questions</span>
+          </h2>
+
+        </div>
+
+
+        <div class="faq-list">
+
+          <details>
+
+            <summary>
+              What is Alter Hub?
+            </summary>
+
+            <p>
+              Alter Hub is a Roblox utility platform with a modern interface,
+              streamlined access system, regular updates, community support,
+              and compatibility information for multiple experiences.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              How do I get access?
+            </summary>
+
+            <p>
+              Choose your preferred access plan and continue through the
+              official purchase or community support channel.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              How does the key system work?
+            </summary>
+
+            <p>
+              The key system provides a simple verification process. Follow
+              the instructions shown on the official access page to verify your
+              account and continue.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              Which games are supported?
+            </summary>
+
+            <p>
+              The currently supported experiences are displayed in the
+              Supported Games section above. More may be added through future
+              updates.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              How frequently is Alter Hub updated?
+            </summary>
+
+            <p>
+              Updates are released whenever interface improvements,
+              compatibility changes, maintenance work, or new platform
+              features are ready.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              Can I save my settings?
+            </summary>
+
+            <p>
+              Supported preferences and interface settings can be saved,
+              helping you return to your preferred layout more easily.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              Does Alter Hub work on mobile?
+            </summary>
+
+            <p>
+              The website interface is designed to work across desktop, tablet,
+              and mobile screen sizes. Availability of individual platform
+              functions may depend on the supported environment.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              Where can I get support?
+            </summary>
+
+            <p>
+              Join the official Discord community for announcements,
+              troubleshooting assistance, purchase support, and platform
+              updates.
+            </p>
+
+          </details>
+
+
+          <details>
+
+            <summary>
+              What payment methods are accepted?
+            </summary>
+
+            <p>
+              Available payment methods are listed through the official
+              purchase channel and may vary depending on your location.
+            </p>
+
+          </details>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- COMMUNITY SECTION -->
+
+    <section
+      id="community"
+      class="section section-dark community-section"
+    >
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow pill">
+            JOIN THE COMMUNITY
+          </span>
+
+          <h2>
+            Stay
+            <span>Connected</span>
+          </h2>
+
+          <p>
+            Receive updates, ask questions, suggest improvements, and connect
+            with the Alter Hub community.
+          </p>
+
+        </div>
+
+
+        <div class="community-grid">
+
+          <article class="community-card">
+
+            <div
+              class="community-icon"
+              aria-hidden="true"
+            >
+              💬
+            </div>
+
+            <h3>
+              Discord Server
+            </h3>
+
+            <p>
+              Join for support, announcements, giveaways, community
+              discussions, compatibility news, and platform updates.
+            </p>
+
+            <a
+              class="btn btn-primary"
+              href="https://discord.gg/nzyb2QxYjn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join Discord
+            </a>
+
+          </article>
+
+
+          <article class="community-card">
+
+            <div
+              class="community-icon"
+              aria-hidden="true"
+            >
+              ▶️
+            </div>
+
+            <h3>
+              YouTube Channel
+            </h3>
+
+            <p>
+              Watch interface showcases, setup tutorials, update videos,
+              product previews, and development announcements.
+            </p>
+
+            <a
+              class="btn btn-secondary"
+              href="https://www.youtube.com/@alter-x9749"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Watch on YouTube
+            </a>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="footer">
+
+    <div class="container footer-top">
+
+      <div>
+
+        <a
+          class="brand"
+          href="#home"
+        >
+          Alter<span>Hub</span>
+        </a>
+
+        <p>
+          A fast, modern, and community-focused Roblox utility platform.
+        </p>
+
+      </div>
+
+
+      <nav aria-label="Footer navigation">
+
+        <a href="#home">
+          Home
+        </a>
+
+        <a href="#pricing">
+          Pricing
+        </a>
+        
+        <a href="#features">
+          Features
+        </a>
+
+        <a href="#games">
+          Games
+        </a>
+
+        <a href="#faq">
+          FAQ
+        </a>
+
+        <a href="#community">
+          Discord
+        </a>
+
+      </nav>
+
+    </div>
+    
+    <div class="container footer-bottom">
+
+      <span>
+        © 2026 Alter Hub. All rights reserved.
+      </span>
+
+      <div>
+        <a href="terms">Terms of Service</a>
+        <a href="privacy">Privacy Policy</a>
+
+        <a href="https://discord.gg/nzyb2QxYjn" target="_blank" rel="noopener noreferrer">
+          Discord
+          
+        </a>
+
+        <a href="https://www.youtube.com/@alter-x9749" target="_blank" rel="noopener noreferrer">
+          YouTube
+        </a>
+
+      </div>
+
+    </div>
+    
+
+
+    
+
+    
+
+  </footer>
+
+
+  <script src="assets/js/script.js"></script>
+
+
+
+  <script>
+    (() => {
+      const hero = document.querySelector(".hero");
+      const heroTilt = document.querySelector(".hero-tilt");
+
+      if (!hero || !heroTilt) return;
+
+      const maximumRotation = 4;
+      let animationFrame = null;
+
+      const resetTilt = () => {
+        hero.classList.remove("is-tracking");
+        heroTilt.style.setProperty("--hero-rotate-x", "0deg");
+        heroTilt.style.setProperty("--hero-rotate-y", "0deg");
+      };
+
+      hero.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch") return;
+
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+        }
+
+        animationFrame = requestAnimationFrame(() => {
+          const bounds = hero.getBoundingClientRect();
+          const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+          const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+          const rotateY = x * maximumRotation * 2;
+          const rotateX = y * maximumRotation * -2;
+
+          hero.classList.add("is-tracking");
+          heroTilt.style.setProperty(
+            "--hero-rotate-x",
+            `${rotateX.toFixed(2)}deg`
+          );
+          heroTilt.style.setProperty(
+            "--hero-rotate-y",
+            `${rotateY.toFixed(2)}deg`
+          );
+        });
+      });
+
+      hero.addEventListener("pointerleave", resetTilt);
+      hero.addEventListener("pointercancel", resetTilt);
+    })();
+  </script>
+
+</body>
+</html>
